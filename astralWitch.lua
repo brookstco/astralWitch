@@ -17,7 +17,7 @@ local sprites = {
 local sprShoot1 = Sprite.load("Shoot1", path .. "Shoot1", 6, 3, 6)
 local sprShoot2 = Sprite.load("Shoot2", path .. "Shoot2", 6, 3, 8)
 local sprShoot3 = Sprite.load("Shoot3", path .. "Shoot3", 14, 6, 9)
-local sprShoot4 = Sprite.load("Shoot4", path .. "Shoot4", 6, 3, 6)
+local sprShoot4 = Sprite.load("Shoot4", path .. "Shoot4", 5, 3, 7)
 -- The sprite used by the skill icons
 local sprSkills = Sprite.load("skills", path .. "Skills", 6, 0, 0)
 
@@ -324,12 +324,12 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
 
                 if player:get("scepter") <= 0 then
                     -- No scepter
-                    player:fireExplosion(player.x + player.xscale * 37, player.y, 76 / 19, 56 / 4, 5.0,
+                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76 / 19, 56 / 4, 5.0,
                         sprDivergenceExplosion, sprDoubleSparks)
                     debuffDuration = (2 + (3 / playerAc.attack_speed)) * 60
                 else
                     -- We have a scepter
-                    player:fireExplosion(player.x + player.xscale * 37, player.y, 76 / 19, 56 / 4, 7.0,
+                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76 / 19, 56 / 4, 7.0,
                         sprDivergenceExplosion, sprDoubleSparks)
                     -- Layer sound effects when scepter is active
                     sndGuardDeath:play(1.2 + math.random() * 0.3, 0.6)
@@ -337,7 +337,7 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                 end
 
                 -- Deactivates the first 2 stages for 1 second
-                playerData.disabled = math.ceil(1 * 60)
+                playerData.disabled = math.ceil(1.5 * 60)
                 player:setSkillIcon(1, sprSkills, 6)
                 player:setSkillIcon(2, sprSkills, 6)
 

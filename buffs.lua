@@ -10,13 +10,13 @@ erosion:addCallback("start", function(actor)
     -- Start doesn't actually get the duration, so we can't set it initially. Instead we use stored vars to make the step trigger the proper start action.
 	local a = actor:getAccessor()
     --a.erosionAdded = true
-    log("Starting damage: "..a.damage.." Starting speed: "..a.attack_speed)
-    local damageDecrease = math.max(a.damage - 1, 0) / 2
+    local damageDecrease = math.max(a.damage, 0) / 2
     a.erosionDamageChange = damageDecrease
     a.damage = a.damage - damageDecrease
-    local speedDecrease = math.max(a.attack_speed - 0.75, 0) / 2
-    a.erosionSpeedChange = speedDecrease
-    a.attack_speed = a.attack_speed - speedDecrease
+    --Speed also decreases dash distance, which I was trying to avoid
+    --local speedDecrease = math.max(a.attack_speed - 0.75, 0) / 2
+    --a.erosionSpeedChange = speedDecrease
+    --a.attack_speed = a.attack_speed - speedDecrease
 end)
 
 -- erosion:addCallback("step", function(actor, timeLeft)
@@ -60,9 +60,9 @@ erosion:addCallback("end", function(actor, timeLeft)
         a.damage = a.damage + damageIncrease
         a.erosionDamageChange = nil
     end
-    local speedIncrease = a.erosionSpeedChange
-    if speedIncrease ~= nil then
-        a.attack_speed = a.attack_speed + speedIncrease
-        a.erosionSpeedChange = nil
-    end
+    --local speedIncrease = a.erosionSpeedChange
+    --if speedIncrease ~= nil then
+    --    a.attack_speed = a.attack_speed + speedIncrease
+    --    a.erosionSpeedChange = nil
+    --end
 end)
