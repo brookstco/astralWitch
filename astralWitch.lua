@@ -28,11 +28,12 @@ local sprDoubleSparks = Sprite.load("doubleSparks", path.."doubleSparks", 3, 13,
 local sprDissonanceExplosion = Sprite.load("dissonanceExplosion", path .. "dissonanceExplosion", 5, 10, 9)
 local sprDivergenceExplosion = Sprite.load("divergenceExplosion", path .. "DivergenceExplosion", 7, 40, 30)
 
--- TODO: Update sound selection
-local sndSkill1 = Sound.find("SamuraiShoot1", "vanilla")
+-- SFX
+local sndSkill1 = Sound.find("ImpGShoot1", "vanilla")
 local sndSkill2 = Sound.find("Bullet2", "vanilla")
-local sndBoss1Shoot1 = Sound.find("Boss1Shoot1", "vanilla")
-local sndGuardDeath = Sound.find("GuardDeath", "vanilla")
+local sndSkill3 = Sound.find("Smite", "vanilla")
+local sndSkillDash = Sound.find("WispShoot1", "vanilla")
+local sndSkill4 = Sound.find("Smite", "vanilla")
 
 -- Set the description of the character and the sprite used for skill icons
 astral:setLoadoutInfo([[The &y&Astral Witch&!& manipulates the power of stars and space.
@@ -171,7 +172,7 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
             end
 
             -- Plays the sound effect
-            sndSkill1:play(0.8 + math.random() * 0.2)
+            sndSkill1:play(1.5 + math.random() * 0.2, 0.7)
         end
 
     elseif skill == 2 then
@@ -279,7 +280,8 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                 end
             end
 
-            sndSkill2:play(0.9 + math.random() * 0.2)
+            sndSkill3:play(1 + math.random() * 0.2, 0.9)
+            sndSkillDash:play(0.9 + math.random() * 0.2)
         end
 
         -- Gravity
@@ -332,7 +334,7 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                     player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76 / 19, 56 / 4, 7.0,
                         sprDivergenceExplosion, sprDoubleSparks)
                     -- Layer sound effects when scepter is active
-                    sndGuardDeath:play(1.2 + math.random() * 0.3, 0.6)
+                    sndSkill4:play(1 + math.random() * 0.3, 0.5)
                     debuffDuration = (2 + (2 / playerAc.attack_speed)) * 60
                 end
 
@@ -346,7 +348,7 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                 player:applyBuff(erosion, debuffDuration)
 
                 -- Play a sound effect
-                sndBoss1Shoot1:play(1.2 + math.random() * 0.3)
+                sndSkill4:play(0.8 + math.random() * 0.3, 1.3)
             end
         end
     end
