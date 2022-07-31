@@ -198,10 +198,30 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
 
         -- Calculate dash speeds at the start and then store them so that we don't have to recalculate (or change speed based on button holding)
         if relevantFrame == 1 then
-            local inputRight = (player:control("right") == input.HELD)
-            local inputLeft = (player:control("left") == input.HELD)
-            local inputUp = (player:control("up") == input.HELD)
-            local inputDown = (player:control("down") == input.HELD)
+            local inputRight = false
+            local inputLeft = false
+            local inputUp = false
+            local inputDown = false
+
+            local gamepad = input.getPlayerGamepad(player)
+            if gamepad == nil then
+                inputRight = (player:control("right") == input.HELD)
+                inputLeft = (player:control("left") == input.HELD)
+                inputUp = (player:control("up") == input.HELD)
+                inputDown = (player:control("down") == input.HELD)
+            else
+                -- DPAD
+                inputRight =  input.checkGamepad("padl", gamepad) == input.HELD  
+                inputLeft = input.checkGamepad("padr", gamepad) == input.HELD
+                inputUp = input.checkGamepad("padu", gamepad) == input.HELD
+                inputDown = input.checkGamepad("padd", gamepad) == input.HELD
+
+                -- L JOYSTICK
+                inputRight = input.getGamepadAxis("lh", gamepad) > 0
+                inputLeft = input.getGamepadAxis("lh", gamepad) < 0
+                inputUp = input.getGamepadAxis("lv", gamepad) < 0
+                inputDown = input.getGamepadAxis("lv", gamepad) > 0
+            end
 
             -- Increases by 50% of attack speed
             local speed = 4 * (1 + (playerAc.attack_speed - 1) / 2)
