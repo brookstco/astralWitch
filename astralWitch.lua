@@ -83,7 +83,7 @@ astral:addCallback("init", function(player)
     playerData.baseGrav2 = playerAc.pGravity2
 
     -- Set the player's skill icons
-    player:setSkill(1, "Stellar Light", "Shoot a beam of light for 120% damage.", sprSkills, 1, 20)
+    player:setSkill(1, "Stellar Light", "Shoot a beam of light for 120% damage.", sprSkills, 1, 1)
     player:setSkill(2, "Dark Matter Blast", "Blast all enemies in front of you for 3x80% damage.", sprSkills, 2, 3 * 60)
     player:setSkill(3, "Dissonance",
         "Explodes around you for 180%.\nLaunches you in a controlled direction while invincible.", sprSkills, 3,
