@@ -184,6 +184,8 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                 -- Add a small amount of knockback?
                 local blast = player:fireExplosion(player.x + player.xscale * (23), player.y, 40 / 19, 16 / 4, 0.8, nil,
                     sprDarkSparks)
+                blast:set("knockback", relevantFrame - 1)
+                blast:set("knockback_direction", player.xscale)
                 if i ~= 0 then
                     blast:set("climb", i * 8)
                 end
