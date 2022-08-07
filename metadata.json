@@ -2,7 +2,7 @@
     "name": "Astral Witch",
     "description": "A cunning seeker of knowledge of Stars and Space lands on Petrichor V.\nThe Astral Witch manipulates the power of stars and space.\nSnipe targets from afar or close in to deal with groups.\nDivergence can deal massive damage to a large swathe of enemies, \nbut will cripple your damage afterwards.\nControl mobility with Dissonance, after a moment of vulnerability.",
 	"internalname": "astralWitch",
-    "version": "0.9.3",
+    "version": "1.0",
     "author": "CBrooks",
     "mpcompat": true
 }
