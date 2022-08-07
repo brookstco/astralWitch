@@ -57,7 +57,9 @@ Briefly &r&cripple&!& &y&Stellar Light&!& and &y&Dark Matter Blast&!&.]])
 astral.loadoutColor = Color(0xDDF6FF)
 
 -- The character's sprite in the selection pod
-astral.loadoutSprite = Sprite.load("astralSelect", "astralWitch/select", 4, 2, 0)
+astral.loadoutSprite = Sprite.load("astralSelect", path .. "select", 4, 2, 0)
+-- Multiplayer selection box
+astral.idleSprite = Sprite.load("icon", path .. "Idle", 1, 3, 6)
 
 -- The character's walk animation on the title screen when selected
 astral.titleSprite = sprites.walk
