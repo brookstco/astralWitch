@@ -88,12 +88,12 @@ astral:addCallback("init", function(player)
     player:setSkill(3, "Dissonance",
         "Explodes around you for 180%.\nLaunches you in a controlled direction while invincible.", sprSkills, 3,
         5 * 60)
-    -- Alternative skill: Resonance: Grants large buffs based on light an dark for a short while. Invuln during cast. Long cooldown.
+    -- Alternative skill: Resonance: Grants large buffs based on light and dark for a short while. Invuln during cast. Long cooldown.
 
     player:setSkill(4, "Divergence",
         "Light and Dark explode for 800% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
         sprSkills, 4, 20 * 60)
-    -- Alternative skill: Convergence: Light and Dark focus on a point dealing massive single-target damage. Doesn't disable, but longer cooldown?
+    -- Alternative skill: Convergence: Light and Dark focus on a point dealing massive single-target damage. Cripples?
 end)
 
 -- Called when the player levels up
@@ -231,13 +231,16 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                 inputDown = input.getGamepadAxis("lv", gamepad) > deadZone
             end
 
-            -- Increases by 50% of attack speed
-            local speed = 4 * (1 + (playerAc.attack_speed - 1) / 2)
-            local angleConst = 0.71 -- Unit Constant from a = sqrt(c/2), given pythagorean theorem and 45 degree angle (a=b)
 
-            local baseSpeed = player:get("pHmax") * player.xscale
+            
+            local baseSpeed = math.abs(player:get("pHmax") * player.xscale)
             -- Vertical speed is based on character speed + bonus from jump height items, reduces to account for a higher base jump height than speed (3 vs 1.3)
             local vertBonus = ((player:get("pVmax") - playerData.basepVmax) * 0.4)
+
+            -- Increases by 50% of attack speed
+            local speed = baseSpeed * 3 + (1 + (playerAc.attack_speed - 1) / 2)
+            local angleConst = 0.71 -- Unit Constant from a = sqrt(c/2), given pythagorean theorem and 45 degree angle (a=b)
+
 
             local hSpeed = 0
             local vSpeed = 0
