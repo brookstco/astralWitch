@@ -50,7 +50,7 @@ astral:setLoadoutSkill(2, "Dark Matter Blast", [[Blast &y&all enemies&!& in fron
 astral:setLoadoutSkill(3, "Dissonance", [[&y&Explode&!& around you for &y&180%&!&.
 Launches you in a &y&controlled direction&!& while &b&invulnerable&!&.]])
 
-astral:setLoadoutSkill(4, "Divergence", [[Light and Dark explode for &y&800% damage&!& in a large area.
+astral:setLoadoutSkill(4, "Divergence", [[Light and Dark explode for &y&700% damage&!& in a large area.
 Briefly &r&cripple&!& &y&Stellar Light&!& and &y&Dark Matter Blast&!&.]])
 
 -- The color of the character's skill names in the character select
@@ -93,8 +93,8 @@ astral:addCallback("init", function(player)
     -- Alternative skill: Resonance: Grants large buffs based on light and dark for a short while. Invuln during cast. Long cooldown.
 
     player:setSkill(4, "Divergence",
-        "Light and Dark explode for 800% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
-        sprSkills, 4, 20 * 60)
+        "Light and Dark explode for 700% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
+        sprSkills, 4, 15 * 60)
     -- Alternative skill: Convergence: Light and Dark focus on a point dealing massive single-target damage. Cripples?
 end)
 
@@ -106,8 +106,8 @@ end)
 -- Called when the player picks up the Ancient Scepter
 astral:addCallback("scepter", function(player)
     player:setSkill(4, "Astral Divergence",
-        "Light and Dark explode violently for 1000% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
-        sprSkills, 5, 20 * 60)
+        "Light and Dark explode violently for 900% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
+        sprSkills, 5, 15 * 60)
 end)
 
 -- Called when the player tries to use a skill
@@ -359,12 +359,12 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
 
                 if player:get("scepter") <= 0 then
                     -- No scepter
-                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76/19, 56/4, 8.0,
+                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76/19, 56/4, 7.0,
                         sprDivergenceExplosion, sprDoubleSparks)
                     debuffDuration = (2 + (3 / playerAc.attack_speed)) * 60
                 else
                     -- We have a scepter
-                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76/19, 56/4, 10.0,
+                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76/19, 56/4, 9.0,
                         sprDivergenceExplosion, sprDoubleSparks)
                     -- Layer sound effects when scepter is active
                     sndSkill4:play(1 + math.random() * 0.3, 0.5)
