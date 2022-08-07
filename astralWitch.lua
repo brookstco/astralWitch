@@ -50,7 +50,7 @@ astral:setLoadoutSkill(2, "Dark Matter Blast", [[Blast &y&all enemies&!& in fron
 astral:setLoadoutSkill(3, "Dissonance", [[&y&Explode&!& around you for &y&180%&!&.
 Launches you in a &y&controlled direction&!& while &b&invulnerable&!&.]])
 
-astral:setLoadoutSkill(4, "Divergence", [[Light and Dark explode for &y&500% damage&!& in a large area.
+astral:setLoadoutSkill(4, "Divergence", [[Light and Dark explode for &y&800% damage&!& in a large area.
 Briefly &r&cripple&!& &y&Stellar Light&!& and &y&Dark Matter Blast&!&.]])
 
 -- The color of the character's skill names in the character select
@@ -91,8 +91,8 @@ astral:addCallback("init", function(player)
     -- Alternative skill: Resonance: Grants large buffs based on light an dark for a short while. Invuln during cast. Long cooldown.
 
     player:setSkill(4, "Divergence",
-        "Light and Dark explode for 500% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
-        sprSkills, 4, 8 * 60)
+        "Light and Dark explode for 800% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
+        sprSkills, 4, 20 * 60)
     -- Alternative skill: Convergence: Light and Dark focus on a point dealing massive single-target damage. Doesn't disable, but longer cooldown?
 end)
 
@@ -104,8 +104,8 @@ end)
 -- Called when the player picks up the Ancient Scepter
 astral:addCallback("scepter", function(player)
     player:setSkill(4, "Astral Divergence",
-        "Light and Dark explode violently for 700% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
-        sprSkills, 5, 8 * 60)
+        "Light and Dark explode violently for 1000% damage in a large area.\nBriefly cripple Stellar Light and Dark Matter Blast.",
+        sprSkills, 5, 20 * 60)
 end)
 
 -- Called when the player tries to use a skill
@@ -184,7 +184,11 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                 -- Add a small amount of knockback?
                 local blast = player:fireExplosion(player.x + player.xscale * (23), player.y, 40 / 19, 16 / 4, 0.8, nil,
                     sprDarkSparks)
-                blast:set("knockback", relevantFrame - 1)
+                if relevantFrame == 4 then
+                    blast:set("knockback", 4)
+                else
+                    blast:set("knockback", 1)
+                end
                 blast:set("knockback_direction", player.xscale)
                 if i ~= 0 then
                     blast:set("climb", i * 8)
@@ -218,11 +222,13 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
                 inputUp = input.checkGamepad("padu", gamepad) == input.HELD
                 inputDown = input.checkGamepad("padd", gamepad) == input.HELD
 
+                local deadZone = 0.15
+
                 -- L JOYSTICK
-                inputRight = input.getGamepadAxis("lh", gamepad) > 0
-                inputLeft = input.getGamepadAxis("lh", gamepad) < 0
-                inputUp = input.getGamepadAxis("lv", gamepad) < 0
-                inputDown = input.getGamepadAxis("lv", gamepad) > 0
+                inputRight = input.getGamepadAxis("lh", gamepad) > deadZone
+                inputLeft = input.getGamepadAxis("lh", gamepad) < -deadZone
+                inputUp = input.getGamepadAxis("lv", gamepad) < -deadZone
+                inputDown = input.getGamepadAxis("lv", gamepad) > deadZone
             end
 
             -- Increases by 50% of attack speed
@@ -348,12 +354,12 @@ astral:addCallback("onSkill", function(player, skill, relevantFrame)
 
                 if player:get("scepter") <= 0 then
                     -- No scepter
-                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76 / 19, 56 / 4, 5.0,
+                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76/19, 56/4, 8.0,
                         sprDivergenceExplosion, sprDoubleSparks)
                     debuffDuration = (2 + (3 / playerAc.attack_speed)) * 60
                 else
                     -- We have a scepter
-                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76 / 19, 56 / 4, 7.0,
+                    player:fireExplosion(player.x + player.xscale * 37, player.y - player.yscale * 6, 76/19, 56/4, 10.0,
                         sprDivergenceExplosion, sprDoubleSparks)
                     -- Layer sound effects when scepter is active
                     sndSkill4:play(1 + math.random() * 0.3, 0.5)
